@@ -4,6 +4,7 @@ from pygame import time
 import gc
 import numpy as np
 from game import Game
+from classes import *
 
 
 def main():
@@ -20,17 +21,21 @@ def main():
 
     game_running = True
 
+    # testing
+    game.bodies.append(Body(400, 200, 25, (5, 2), (255, 255, 255)))
+    game.bodies.append(Body(800, 400, 10, (-2, 0), (0, 0, 255)))
+
+
     while game_running:
         clock.tick(60)  # fps limit
         fps = clock.get_fps()
-        print(f'fps: {str(round(fps))}')
+        # print(f'fps: {str(round(fps))}')
 
         events = pg.event.get()
         for event in events:
             if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
                 game_running = False
 
-        game.render_circle(90, 90, 20)
         game.update()
 
     pg.quit()

@@ -8,3 +8,4 @@ def get_points_in_circle(cx: int, cy: int, radius: int) -> []:
             if (x - cx) ** 2 + (y - cy) ** 2 <= r2:
                 pts.append((x, y))
     return pts
+
