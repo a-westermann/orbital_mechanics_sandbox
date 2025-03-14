@@ -18,21 +18,32 @@ class Game:
         self.screen.blit(cropped_surface, (0, 0))
         self.render_image.fill((0, 0, 0))  # paint sreen black before re-drawing objects
 
-        # if I use many points it may be faster to track those positions
-        #  and paint those positions black
         self.update_bodies()
         pg.event.pump()
         pg.display.flip()  # updates the entire surface
 
     def render_circle(self, body: Body):
-        circle = helpers.get_points_in_circle(body.cx, body.cy, body.radius)
-        [self.render_image.set_at((pt[0], pt[1]), body.color) for pt in circle]
+        # circle = helpers.get_points_in_circle(body.cx, body.cy, body.radius)
+        pg.draw.circle(self.render_image, body.color, (body.cx, body.cy), body.radius)
+        # [self.render_image.set_at((pt[0], pt[1]), body.color) for pt in circle]
 
     def update_bodies(self):
         for body in self.bodies:
             # get updated position
             other_bodies = self.get_other_bodie(body.cx, body.cy)
-            body.color = (255, 0, 0) if other_bodies else body.default_color
+            # body.color = (255, 0, 0) if other_bodies else body.default_color  # testing
+            destroyed = False
+            for other in other_bodies:
+                if destroyed:
+                    continue
+                dist = max(1, helpers.get_dist(body.cx, other.cx, body.cy, other.cy))
+                if dist < other.radius and other.radius > body.radius:
+                    destroyed = True
+                    self.bodies.remove(body)
+                    continue
+                grav_accel = helpers.get_grav_accel(body, other, dist)
+                body.velocity = (body.velocity[0] + (other.cx - body.cx) * grav_accel,
+                                 body.velocity[1] + (other.cy - body.cy) * grav_accel)
             body.cx, body.cy = body.cx + body.velocity[0], body.cy + body.velocity[1]
             self.render_circle(body)
 
