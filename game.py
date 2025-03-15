@@ -9,6 +9,11 @@ class Game:
         self.screen = screen
         self.window_size = window_size
         self.bodies = []
+        self.mouse_down = False
+        self.mouse_mov = pg.Vector2(0, 0)
+        self.start_traj_pos = (self.window_size[0] / 2, self.window_size[1] / 2)
+        self.traj_color = (0, 255, 0)
+
 
     def update(self):
         draw_area = pg.Rect(0, 0, self.window_size[0], self.window_size[1])
@@ -19,8 +24,14 @@ class Game:
         self.render_image.fill((0, 0, 0))  # paint sreen black before re-drawing objects
 
         self.update_bodies()
-        pg.event.pump()
-        pg.display.flip()  # updates the entire surface
+        # pg.event.pump()
+        # pg.display.flip()  # updates the entire surface
+        self.draw_trajectory()
+        pg.display.update()
+
+    def draw_trajectory(self):
+        pg.draw.line(self.render_image, self.traj_color, self.start_traj_pos,
+                     self.start_traj_pos + self.mouse_mov)
 
     def render_circle(self, body: Body):
         # circle = helpers.get_points_in_circle(body.cx, body.cy, body.radius)
