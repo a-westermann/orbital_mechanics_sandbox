@@ -9,7 +9,7 @@ class Game:
         self.render_image = render_image
         self.screen = screen
         self.window_size = window_size
-        self.level = 0
+        self.level = 2
         self.current_level: Level = None
         self.bodies : [Body] = []
         self.mouse_down = False
@@ -42,9 +42,11 @@ class Game:
         # pg.display.flip()  # updates the entire surface
         self.draw_trajectory()
         pg.draw.rect(self.render_image, self.goal.color, self.goal)  # draw the goal
+
+
         if self.check_goal_collision():
             self.next_level()
-            self.goal.color = (255, 0, 0)
+        # anything past here will affect the following level!
 
         pg.display.update()
 
@@ -77,6 +79,10 @@ class Game:
             if body.comet and not self.comet_moving:
                 self.render_circle(body)
                 continue  # don't allow comet to move until shot
+
+            if body.static:
+                self.render_circle(body)
+                continue  # don't allow gravity to affect this body
             # get updated position
             other_bodies = self.get_other_bodie(body.cx, body.cy)
             # body.color = (255, 0, 0) if other_bodies else body.default_color  # testing

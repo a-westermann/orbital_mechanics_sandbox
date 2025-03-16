@@ -2,7 +2,7 @@ import pygame as pg
 
 
 class Body:
-    def __init__(self, cx: int, cy: int, radius: int, velocity: (float, float), color):
+    def __init__(self, cx: int, cy: int, radius: int, velocity: (float, float), color, static):
         super().__init__()
         self.comet = False
         self.cx = cx
@@ -12,12 +12,13 @@ class Body:
         self.soi = radius * 10
         self.mass = radius * 1000000000
         self.default_color = self.color = color
+        self.static = static
 
 
 class Goal(pg.Rect):
     def __init__(self, pos, width, height):
         super().__init__(pos[0], pos[1], width, height)
-        self.color = (255, 255, 255)
+        self.color = (255, 0, 0)
 
 
 class Level:

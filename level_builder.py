@@ -10,7 +10,7 @@ def load_level(lvl) -> Level:
     bodies = []
     for i, b in enumerate(lvl_data['bodies']):
         bodies.append(Body(b['x'], b['y'], b['size'], (b['velocity_x'], b['velocity_y']),
-                        (b['color_x'], b['color_y'], b['color_z'])))
+                        (b['color_x'], b['color_y'], b['color_z']), b['static']))
         if i == 0:
             bodies[-1].comet = True
 
