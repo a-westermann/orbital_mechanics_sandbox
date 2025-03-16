@@ -24,9 +24,11 @@ def main():
 
     game_running = True
 
+    game.setup_level()
     # testing
+    # game.bodies.append(Body(100, 600, 4, (0, 0), (0, 255, 255)))
     # game.bodies.append(Body(150, 850, 8, (2, 2), (255, 255, 0)))
-    game.bodies.append(Body(1200, 600, 150, (0, 0), (255, 255, 255)))
+    # game.bodies.append(Body(1200, 600, 80, (0, 0), (255, 255, 255)))
     # game.bodies.append(Body(1650, 400, 2, (-3, -2.5), (255, 0, 255)))
     # for i in range(random.randrange(200, 250)):
     #     x, y = random.randrange(0, window_size[0]), random.randrange(0, window_size[1])
@@ -44,7 +46,8 @@ def main():
 
         events = pg.event.get()
         for event in events:
-            if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
+            keys = pg.key.get_pressed()
+            if event.type == pg.QUIT or (event.type == pg.KEYDOWN and keys[pg.K_ESCAPE]):
                 game_running = False
 
             if event.type == pg.MOUSEBUTTONDOWN and pg.mouse.get_pressed()[0]:
@@ -53,6 +56,7 @@ def main():
                 pg.mouse.set_visible(False)
             elif game.mouse_down and event.type == pg.MOUSEBUTTONUP and not pg.mouse.get_pressed()[0]:
                 game.mouse_down = False
+                game.shoot_comet = True
                 pg.mouse.set_visible(True)
 
             if game.mouse_down and event.type == pg.MOUSEMOTION:
@@ -63,10 +67,12 @@ def main():
                 if (game.mouse_mov[1] * traj_vector[1] > 0) and abs(game.mouse_mov[1]) > max_len:
                     traj_vector = (traj_vector[0], 0)
                 game.mouse_mov += traj_vector
-                print(game.mouse_mov)
 
-            # if event.type == pg.MOUSEMOTION:
+            if pg.KEYDOWN and keys[pg.K_SPACE]:
+                game.setup_level()
 
+
+        game.update_comet()
         game.update()
 
     pg.quit()

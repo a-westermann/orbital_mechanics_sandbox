@@ -1,6 +1,7 @@
 import pygame as pg
 import helpers
 from classes import *
+import level_builder
 
 
 class Game:
@@ -8,11 +9,23 @@ class Game:
         self.render_image = render_image
         self.screen = screen
         self.window_size = window_size
-        self.bodies = []
+        self.level = 1
+        self.current_level: Level = None
+        self.bodies : [Body] = []
         self.mouse_down = False
         self.mouse_mov = pg.Vector2(0, 0)
+        self.mouse_mov_multi = 0.02
         self.start_traj_pos = (self.window_size[0] / 2, self.window_size[1] / 2)
         self.traj_color = (0, 255, 0)
+        self.shoot_comet = False
+        self.goal : Goal = None
+
+
+    def setup_level(self):
+        self.mouse_mov = pg.Vector2(0, 0)
+        self.current_level = level_builder.load_level(self.level)
+        self.bodies = self.current_level.bodies
+        self.goal = self.current_level.goal
 
 
     def update(self):
@@ -27,7 +40,16 @@ class Game:
         # pg.event.pump()
         # pg.display.flip()  # updates the entire surface
         self.draw_trajectory()
+        pg.draw.rect(self.render_image, self.goal.color, self.goal)  # draw the goal
+        if self.check_goal_collision():
+            self.goal.color = (255, 0, 0)
+
         pg.display.update()
+
+
+
+    def check_goal_collision(self) -> bool:
+        return self.goal.collidepoint((self.bodies[0].cx, self.bodies[0].cy))
 
     def draw_trajectory(self):
         pg.draw.line(self.render_image, self.traj_color, self.start_traj_pos,
@@ -37,6 +59,12 @@ class Game:
         # circle = helpers.get_points_in_circle(body.cx, body.cy, body.radius)
         pg.draw.circle(self.render_image, body.color, (body.cx, body.cy), body.radius)
         # [self.render_image.set_at((pt[0], pt[1]), body.color) for pt in circle]
+
+    def update_comet(self):
+        if self.shoot_comet:
+            self.shoot_comet = False
+            self.bodies[0].velocity = -self.mouse_mov * self.mouse_mov_multi
+
 
     def update_bodies(self):
         for body in self.bodies:
@@ -50,6 +78,9 @@ class Game:
                 dist = max(1, helpers.get_dist(body.cx, other.cx, body.cy, other.cy))
                 if dist < other.radius and other.radius > body.radius:
                     destroyed = True
+                    if body == self.bodies[0]:  # comet was destroyed
+                        self.setup_level()
+                        return
                     self.bodies.remove(body)
                     continue
                 grav_accel = helpers.get_grav_accel(body, other, dist)
