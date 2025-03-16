@@ -6,11 +6,14 @@ def load_level(lvl) -> Level:
     with open('levels.json', 'r') as f:
         data = json.load(f)
 
+    lvl_data = data['levels'][lvl]
     bodies = []
-    for b in data['bodies']:
+    for i, b in enumerate(lvl_data['bodies']):
         bodies.append(Body(b['x'], b['y'], b['size'], (b['velocity_x'], b['velocity_y']),
                         (b['color_x'], b['color_y'], b['color_z'])))
+        if i == 0:
+            bodies[-1].comet = True
 
-    goal = Goal((data['goal_x'], data['goal_y']), data['goal_width'], data['goal_height'])
+    goal = Goal((lvl_data['goal_x'], lvl_data['goal_y']), lvl_data['goal_width'], lvl_data['goal_height'])
     level = Level(lvl, bodies, goal)
     return level

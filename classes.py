@@ -4,6 +4,7 @@ import pygame as pg
 class Body:
     def __init__(self, cx: int, cy: int, radius: int, velocity: (float, float), color):
         super().__init__()
+        self.comet = False
         self.cx = cx
         self.cy = cy
         self.radius = radius

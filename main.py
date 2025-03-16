@@ -56,10 +56,11 @@ def main():
                 pg.mouse.set_visible(False)
             elif game.mouse_down and event.type == pg.MOUSEBUTTONUP and not pg.mouse.get_pressed()[0]:
                 game.mouse_down = False
-                game.shoot_comet = True
+                game.comet_moving = True
                 pg.mouse.set_visible(True)
 
-            if game.mouse_down and event.type == pg.MOUSEMOTION:
+
+            if game.mouse_down and event.type == pg.MOUSEMOTION and not game.comet_moving:
                 traj_vector = pg.Vector2(event.rel)
                 max_len = 250
                 if (game.mouse_mov[0] * traj_vector[0] > 0) and abs(game.mouse_mov[0]) > max_len:

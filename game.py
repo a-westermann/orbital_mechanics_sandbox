@@ -9,7 +9,7 @@ class Game:
         self.render_image = render_image
         self.screen = screen
         self.window_size = window_size
-        self.level = 1
+        self.level = 0
         self.current_level: Level = None
         self.bodies : [Body] = []
         self.mouse_down = False
@@ -17,7 +17,7 @@ class Game:
         self.mouse_mov_multi = 0.02
         self.start_traj_pos = (self.window_size[0] / 2, self.window_size[1] / 2)
         self.traj_color = (0, 255, 0)
-        self.shoot_comet = False
+        self.comet_moving = False  # used to stop comet from being gravitied before shooting
         self.goal : Goal = None
 
 
@@ -26,6 +26,7 @@ class Game:
         self.current_level = level_builder.load_level(self.level)
         self.bodies = self.current_level.bodies
         self.goal = self.current_level.goal
+        self.comet_moving = False
 
 
     def update(self):
@@ -42,6 +43,7 @@ class Game:
         self.draw_trajectory()
         pg.draw.rect(self.render_image, self.goal.color, self.goal)  # draw the goal
         if self.check_goal_collision():
+            self.next_level()
             self.goal.color = (255, 0, 0)
 
         pg.display.update()
@@ -50,6 +52,10 @@ class Game:
 
     def check_goal_collision(self) -> bool:
         return self.goal.collidepoint((self.bodies[0].cx, self.bodies[0].cy))
+
+    def next_level(self):
+        self.level += 1
+        self.setup_level()
 
     def draw_trajectory(self):
         pg.draw.line(self.render_image, self.traj_color, self.start_traj_pos,
@@ -61,13 +67,16 @@ class Game:
         # [self.render_image.set_at((pt[0], pt[1]), body.color) for pt in circle]
 
     def update_comet(self):
-        if self.shoot_comet:
-            self.shoot_comet = False
-            self.bodies[0].velocity = -self.mouse_mov * self.mouse_mov_multi
+        if self.comet_moving:
+            self.bodies[0].velocity += -self.mouse_mov * self.mouse_mov_multi
+            self.mouse_mov = pg.Vector2(0, 0)
 
 
     def update_bodies(self):
         for body in self.bodies:
+            if body.comet and not self.comet_moving:
+                self.render_circle(body)
+                continue  # don't allow comet to move until shot
             # get updated position
             other_bodies = self.get_other_bodie(body.cx, body.cy)
             # body.color = (255, 0, 0) if other_bodies else body.default_color  # testing
@@ -78,7 +87,7 @@ class Game:
                 dist = max(1, helpers.get_dist(body.cx, other.cx, body.cy, other.cy))
                 if dist < other.radius and other.radius > body.radius:
                     destroyed = True
-                    if body == self.bodies[0]:  # comet was destroyed
+                    if body.comet:  # comet was destroyed
                         self.setup_level()
                         return
                     self.bodies.remove(body)
