@@ -26,17 +26,17 @@ def main():
 
     game.setup_level()
     # testing
-    # game.bodies.append(Body(100, 600, 4, (0, 0), (0, 255, 255)))
-    # game.bodies.append(Body(150, 850, 8, (2, 2), (255, 255, 0)))
-    # game.bodies.append(Body(1200, 600, 80, (0, 0), (255, 255, 255)))
-    # game.bodies.append(Body(1650, 400, 2, (-3, -2.5), (255, 0, 255)))
+    # game.bodies.append(Body(100, 600, 4, (0, 0), (0, 255, 255), False))
+    # game.bodies.append(Body(150, 850, 8, (2, 2), (255, 255, 0), False))
+    # game.bodies.append(Body(1200, 600, 80, (0, 0), (255, 255, 255), False))
+    # game.bodies.append(Body(1650, 400, 2, (-3, -2.5), (255, 0, 255), False))
     # for i in range(random.randrange(200, 250)):
     #     x, y = random.randrange(0, window_size[0]), random.randrange(0, window_size[1])
     #     size = random.randrange(1, 10)
     #     max_vel = 7
     #     vx, vy = random.randrange(-max_vel, max_vel), random.randrange(-max_vel, max_vel)
     #     color = (random.randrange(0, 255), random.randrange(0, 255), random.randrange(0, 255))
-    #     game.bodies.append(Body(x, y, size, (vx, vy), color))
+    #     game.bodies.append(Body(x, y, size, (vx, vy), color, False))
 
 
     while game_running:

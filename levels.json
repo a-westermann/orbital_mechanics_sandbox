@@ -125,6 +125,70 @@
       "goal_y": 380,
       "goal_width": 20,
       "goal_height": 100
+    },
+    {
+      "level": 3,
+      "bodies": [
+        {
+          "x": 300,
+          "y": 1000,
+          "size": 4,
+          "velocity_x": 0,
+          "velocity_y": 0,
+          "color_x": 0,
+          "color_y": 255,
+          "color_z": 255,
+          "static": false
+        },
+        {
+          "x": 450,
+          "y": 780,
+          "size": 35,
+          "velocity_x": 0,
+          "velocity_y": 0,
+          "color_x": 255,
+          "color_y": 255,
+          "color_z": 255,
+          "static": true
+        },
+        {
+          "x": 850,
+          "y": 225,
+          "size": 100,
+          "velocity_x": 0,
+          "velocity_y": 0,
+          "color_x": 255,
+          "color_y": 255,
+          "color_z": 255,
+          "static": true
+        },
+        {
+          "x": 560,
+          "y": 456,
+          "size": 25,
+          "velocity_x": 0,
+          "velocity_y": 0,
+          "color_x": 255,
+          "color_y": 255,
+          "color_z": 255,
+          "static": true
+        },
+                {
+          "x": 1000,
+          "y": 900,
+          "size": 350,
+          "velocity_x": 0,
+          "velocity_y": 0,
+          "color_x": 255,
+          "color_y": 255,
+          "color_z": 255,
+          "static": true
+        }
+      ],
+      "goal_x": 1600,
+      "goal_y": 380,
+      "goal_width": 20,
+      "goal_height": 100
     }
   ]
 }
