@@ -9,7 +9,7 @@ class Game:
         self.render_image = render_image
         self.screen = screen
         self.window_size = window_size
-        self.level = 2
+        self.level = 0
         self.current_level: Level = None
         self.bodies : [Body] = []
         self.mouse_down = False
