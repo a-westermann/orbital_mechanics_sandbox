@@ -9,7 +9,7 @@ class Game:
         self.render_image = render_image
         self.screen = screen
         self.window_size = window_size
-        self.level = 0
+        self.level = 1
         self.current_level: Level = None
         self.bodies : [Body] = []
         self.mouse_down = False
@@ -19,6 +19,7 @@ class Game:
         self.traj_color = (0, 255, 0)
         self.comet_moving = False  # used to stop comet from being gravitied before shooting
         self.goal : Goal = None
+        self.nogoZones : [NoGoZone] = []
 
 
     def setup_level(self):
@@ -26,6 +27,7 @@ class Game:
         self.current_level = level_builder.load_level(self.level)
         self.bodies = self.current_level.bodies
         self.goal = self.current_level.goal
+        self.nogoZones = self.current_level.nogos
         self.comet_moving = False
 
 
@@ -42,15 +44,26 @@ class Game:
         # pg.display.flip()  # updates the entire surface
         self.draw_trajectory()
         pg.draw.rect(self.render_image, self.goal.color, self.goal)  # draw the goal
+        for nogo in self.nogoZones:
+            self.lerp_color(nogo)
+            pg.draw.rect(self.render_image, nogo.color, nogo)
 
-
+        # anything past here will affect the following level!
         if self.check_goal_collision():
             self.next_level()
-        # anything past here will affect the following level!
+        if self.check_nogo_collision():
+            self.setup_level()
+            return
 
         pg.display.update()
 
 
+
+    def check_nogo_collision(self):
+        for n in self.nogoZones:
+            if n.collidepoint((self.bodies[0].cx, self.bodies[0].cy)):
+                return True
+        return False
 
     def check_goal_collision(self) -> bool:
         return self.goal.collidepoint((self.bodies[0].cx, self.bodies[0].cy))
@@ -114,3 +127,6 @@ class Game:
 
         return others
 
+
+    def lerp_color(self, obj: ColorLerpObject):
+        obj.update_color()

@@ -12,7 +12,7 @@ from classes import *
 
 def main():
     pg.init()
-    window_size = [1920 , 1080]  # [2560, 1440]  # [1920 , 1080]
+    window_size = [2560, 1440]  # [1920 , 1080]
     flags = FULLSCREEN | DOUBLEBUF
     screen = pg.display.set_mode(window_size)
     gc.disable()  # disable gc worth it?

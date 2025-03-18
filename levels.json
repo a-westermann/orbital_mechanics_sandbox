@@ -15,9 +15,9 @@
           "static": false
         },
         {
-          "x": 1200,
+          "x": 650,
           "y": 600,
-          "size": 80,
+          "size": 250,
           "velocity_x": 0,
           "velocity_y": 0,
           "color_x": 255,
@@ -26,10 +26,10 @@
           "static": true
         }
       ],
-      "goal_x": 1600,
+      "goal_x": 1300,
       "goal_y": 600,
-      "goal_width": 20,
-      "goal_height": 100
+      "goal_width": 300,
+      "goal_height": 20
     },
     {
       "level": 1,
@@ -68,10 +68,23 @@
           "static": true
         }
       ],
-      "goal_x": 1600,
+      "goal_x": 1400,
       "goal_y": 550,
-      "goal_width": 20,
-      "goal_height": 100
+      "goal_width": 150,
+      "goal_height": 100,
+      "nogos": [
+        {
+        "x": 390,
+        "y": 680,
+        "width": 20,
+        "height": 500
+      },
+        {
+          "x": 1190,
+          "y": 0,
+          "width": 20,
+          "height": 520
+        }]
     },
     {
       "level": 2,
