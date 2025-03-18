@@ -2,6 +2,7 @@
   "levels": [
     {
       "level": 0,
+      "name": "Orbit",
       "bodies": [
         {
           "x": 100,
@@ -33,6 +34,7 @@
     },
     {
       "level": 1,
+      "name": "Serpentine",
       "bodies": [
         {
           "x": 100,
@@ -74,11 +76,11 @@
       "goal_height": 100,
       "nogos": [
         {
-        "x": 390,
-        "y": 680,
-        "width": 20,
-        "height": 500
-      },
+          "x": 390,
+          "y": 680,
+          "width": 20,
+          "height": 500
+        },
         {
           "x": 1190,
           "y": 0,
@@ -88,10 +90,11 @@
     },
     {
       "level": 2,
+      "name": "Full Rotation",
       "bodies": [
         {
-          "x": 100,
-          "y": 1000,
+          "x": 800,
+          "y": 650,
           "size": 4,
           "velocity_x": 0,
           "velocity_y": 0,
@@ -101,31 +104,9 @@
           "static": false
         },
         {
-          "x": 350,
-          "y": 850,
-          "size": 80,
-          "velocity_x": 0,
-          "velocity_y": 0,
-          "color_x": 255,
-          "color_y": 255,
-          "color_z": 255,
-          "static": true
-        },
-        {
-          "x": 850,
-          "y": 225,
-          "size": 150,
-          "velocity_x": 0,
-          "velocity_y": 0,
-          "color_x": 255,
-          "color_y": 255,
-          "color_z": 255,
-          "static": true
-        },
-                {
-          "x": 1000,
-          "y": 900,
-          "size": 150,
+          "x": 1100,
+          "y": 650,
+          "size": 200,
           "velocity_x": 0,
           "velocity_y": 0,
           "color_x": 255,
@@ -134,10 +115,166 @@
           "static": true
         }
       ],
-      "goal_x": 1600,
-      "goal_y": 380,
-      "goal_width": 20,
-      "goal_height": 100
+      "goal_x": 790,
+      "goal_y": 750,
+      "goal_width": 80,
+      "goal_height": 15,
+      "nogos": [
+        {
+          "x": 0,
+          "y": 700,
+          "width": 905,
+          "height": 15
+        }]
+    },
+    {
+      "level": 3,
+      "name": "Binary",
+      "bodies": [
+        {
+          "x": 150,
+          "y": 650,
+          "size": 4,
+          "velocity_x": 0,
+          "velocity_y": 0,
+          "color_x": 0,
+          "color_y": 255,
+          "color_z": 255,
+          "static": false
+        },
+        {
+          "x": 1100,
+          "y": 350,
+          "size": 160,
+          "velocity_x": -2,
+          "velocity_y": 0,
+          "color_x": 255,
+          "color_y": 255,
+          "color_z": 255,
+          "static": false
+        },
+        {
+          "x": 1100,
+          "y": 950,
+          "size": 160,
+          "velocity_x": 2,
+          "velocity_y": 0,
+          "color_x": 255,
+          "color_y": 255,
+          "color_z": 255,
+          "static": false
+        }
+      ],
+      "goal_x": 1900,
+      "goal_y": 500,
+      "goal_width": 35,
+      "goal_height": 150
+    },
+    {
+      "level": 4,
+      "name": "Wormhole",
+      "bodies": [
+        {
+          "x": 150,
+          "y": 650,
+          "size": 4,
+          "velocity_x": 0,
+          "velocity_y": 0,
+          "color_x": 0,
+          "color_y": 255,
+          "color_z": 255,
+          "static": false
+        }
+      ],
+      "goal_x": 1900,
+      "goal_y": 550,
+      "goal_width": 35,
+      "goal_height": 150,
+      "nogos": [
+        {
+          "x": 600,
+          "y": 0,
+          "width": 50,
+          "height": 1800
+        }],
+      "wormholes": [
+        {
+          "x": 450,
+          "y": 600,
+          "width": 5,
+          "height": 100
+        },
+        {
+          "x": 850,
+          "y": 600,
+          "width": 5,
+          "height": 100
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "name": "Wormhole Dues",
+      "bodies": [
+        {
+          "x": 150,
+          "y": 650,
+          "size": 4,
+          "velocity_x": 0,
+          "velocity_y": 0,
+          "color_x": 0,
+          "color_y": 255,
+          "color_z": 255,
+          "static": false
+        },
+        {
+          "x": 1850,
+          "y": 625,
+          "size": 80,
+          "velocity_x": 0,
+          "velocity_y": 0,
+          "color_x": 255,
+          "color_y": 255,
+          "color_z": 255,
+          "static": true
+        },
+         {
+          "x": 650,
+          "y": 625,
+          "size": 160,
+          "velocity_x": 0,
+          "velocity_y": 0,
+          "color_x": 255,
+          "color_y": 255,
+          "color_z": 255,
+          "static": true
+        }
+      ],
+      "goal_x": 2350,
+      "goal_y": 550,
+      "goal_width": 35,
+      "goal_height": 150,
+      "nogos": [
+        {
+          "x": 1200,
+          "y": 0,
+          "width": 50,
+          "height": 1800
+        }],
+      "wormholes": [
+        {
+          "x": 1000,
+          "y": 600,
+          "width": 5,
+          "height": 200
+        },
+        {
+          "x": 1300,
+          "y": 600,
+          "width": 5,
+          "height": 200
+        }
+      ]
     }
   ]
 }

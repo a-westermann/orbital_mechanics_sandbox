@@ -2,6 +2,7 @@ import pygame as pg
 import helpers
 from classes import *
 import level_builder
+import math
 
 
 class Game:
@@ -9,7 +10,7 @@ class Game:
         self.render_image = render_image
         self.screen = screen
         self.window_size = window_size
-        self.level = 1
+        self.level = 0
         self.current_level: Level = None
         self.bodies : [Body] = []
         self.mouse_down = False
@@ -20,6 +21,8 @@ class Game:
         self.comet_moving = False  # used to stop comet from being gravitied before shooting
         self.goal : Goal = None
         self.nogoZones : [NoGoZone] = []
+        self.wormhole_cd = 0
+        pg.font.init()
 
 
     def setup_level(self):
@@ -28,7 +31,11 @@ class Game:
         self.bodies = self.current_level.bodies
         self.goal = self.current_level.goal
         self.nogoZones = self.current_level.nogos
+        self.wormholes = self.current_level.wormholes
         self.comet_moving = False
+        font = pg.font.SysFont('Calibri', 26)
+        self.text_surface = font.render(self.current_level.name, False, (255, 255, 255))
+
 
 
     def update(self):
@@ -38,6 +45,7 @@ class Game:
         cropped_surface.blit(self.render_image, (0, 0), draw_area)
         self.screen.blit(cropped_surface, (0, 0))
         self.render_image.fill((0, 0, 0))  # paint sreen black before re-drawing objects
+        self.render_image.blit(self.text_surface, (0, 0))
 
         self.update_bodies()
         # pg.event.pump()
@@ -48,6 +56,15 @@ class Game:
             self.lerp_color(nogo)
             pg.draw.rect(self.render_image, nogo.color, nogo)
 
+        for wormhole in self.wormholes:
+            pg.draw.rect(self.render_image, wormhole.color, wormhole)
+        self.wormhole_cd += 1
+        if self.wormhole_cd > 20:
+            wormhole_index = self.check_wormhole_collision()
+            if wormhole_index != -1:
+                self.wormhole_cd = 0
+                self.enter_wormhole(wormhole_index)
+
         # anything past here will affect the following level!
         if self.check_goal_collision():
             self.next_level()
@@ -57,6 +74,19 @@ class Game:
 
         pg.display.update()
 
+
+
+    def check_wormhole_collision(self):
+        for i, w in enumerate(self.wormholes):
+            if w.collidepoint((self.bodies[0].cx, self.bodies[0].cy)):
+                return i
+        return -1
+
+    def enter_wormhole(self, hole_index):
+        enter_hole_a = hole_index % 2 == 0
+        hole_enter = self.wormholes[hole_index]
+        hole_exit = self.wormholes[hole_index + 1] if enter_hole_a else self.wormholes[hole_index - 1]
+        self.bodies[0].cx, self.bodies[0].cy = hole_exit.centerx, hole_exit.centery
 
 
     def check_nogo_collision(self):

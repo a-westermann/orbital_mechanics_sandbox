@@ -7,6 +7,7 @@ def load_level(lvl) -> Level:
         data = json.load(f)
 
     lvl_data = data['levels'][lvl]
+    lvl_name = lvl_data['name']
     bodies = []
     for i, b in enumerate(lvl_data['bodies']):
         bodies.append(Body(b['x'], b['y'], b['size'], (b['velocity_x'], b['velocity_y']),
@@ -21,5 +22,11 @@ def load_level(lvl) -> Level:
         for i, n in enumerate(lvl_data['nogos']):
             nogos.append(NoGoZone((n['x'], n['y']), n['width'], n['height']))
 
-    level = Level(lvl, bodies, goal, nogos)
+    wormholes = []
+    if 'wormholes' in lvl_data:
+        for i, w in enumerate(lvl_data['wormholes']):
+            wormholes.append(Wormhole((w['x'], w['y']), w['width'], w['height']))
+
+
+    level = Level(lvl, lvl_name, bodies, goal, nogos, wormholes)
     return level

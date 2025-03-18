@@ -57,11 +57,18 @@ class NoGoZone(pg.Rect, ColorLerpObject):
         ColorLerpObject.__init__(self, (255, 0, 0), (255, 0, 0), (125, 0, 0))
 
 
+class Wormhole(pg.Rect):
+    def __init__(self, pos, width, height):
+        super().__init__(pos[0], pos[1], width, height)
+        self.color = (0, 0, 255)
+
+
 class Level:
-    def __init__(self, level, bodies, goal, nogos):
+    def __init__(self, level, name, bodies, goal, nogos, wormholes):
         self.level = level
+        self.name = name
         self.bodies = bodies
         self.goal = goal
         self.nogos = nogos
-
+        self.wormholes = wormholes
 
