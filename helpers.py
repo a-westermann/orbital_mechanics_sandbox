@@ -21,7 +21,7 @@ def get_dist(cx1: int, cx2: int, cy1: int, cy2: int) -> int:
 
 def get_grav_accel(b1: Body, b2: Body, dist: int):
     G = 6.6743 * 10 ** -11
-    return G * b2.mass / (dist ** 2)
+    return G * b2.mass * b2.density / (dist ** 2)  # * (2 / b1.radius)
 
 
 def point_near_line(point, start, end, max_distance=5):
