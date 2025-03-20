@@ -49,6 +49,6 @@ def point_near_line(point, start, end, max_distance=5):
 
 def rotate_vector(vector, angle_degrees):
     angle_radians = math.radians(angle_degrees)
-    rotated_x = vector.x * math.cos(angle_radians) - vector.y * math.sin(angle_radians)
-    rotated_y = vector.x * math.sin(angle_radians) + vector.y * math.cos(angle_radians)
+    rotated_x = vector[0] * math.cos(angle_radians) - vector[1] * math.sin(angle_radians)
+    rotated_y = vector[0] * math.sin(angle_radians) + vector[1] * math.cos(angle_radians)
     return pg.Vector2(rotated_x, rotated_y)
