@@ -10,7 +10,7 @@ class Game:
         self.render_image = render_image
         self.screen = screen
         self.window_size = window_size
-        self.level = 3
+        self.level = 6
         self.current_level: Level = None
         self.bodies : [Body] = []
         self.mouse_down = False
@@ -57,7 +57,7 @@ class Game:
             pg.draw.rect(self.render_image, nogo.color, nogo)
 
         for wormhole in self.wormholes:
-            pg.draw.rect(self.render_image, wormhole.color, wormhole)
+            self.draw_wormhole(wormhole)
         self.wormhole_cd += 1
         if self.wormhole_cd > 20:
             wormhole_index = self.check_wormhole_collision()
@@ -78,7 +78,9 @@ class Game:
 
     def check_wormhole_collision(self):
         for i, w in enumerate(self.wormholes):
-            if w.collidepoint((self.bodies[0].cx, self.bodies[0].cy)):
+            # if w.collidepoint((self.bodies[0].cx, self.bodies[0].cy)):
+            if helpers.point_near_line((self.bodies[0].cx, self.bodies[0].cy), (w.x, w.y),
+                                       (w.end_x, w.end_y)):
                 return i
         return -1
 
@@ -87,6 +89,18 @@ class Game:
         hole_enter = self.wormholes[hole_index]
         hole_exit = self.wormholes[hole_index + 1] if enter_hole_a else self.wormholes[hole_index - 1]
         self.bodies[0].cx, self.bodies[0].cy = hole_exit.centerx, hole_exit.centery
+        angle_dif = hole_exit.angle - hole_enter.angle
+        self.bodies[0].velocity = helpers.rotate_vector(self.bodies[0].velocity, angle_dif)
+
+
+    def draw_wormhole(self, wormhole: Wormhole):
+        angle_rads = math.radians(wormhole.angle)
+        end_x = wormhole.x + 100 * math.cos(angle_rads)
+        end_y = wormhole.y + 100 * math.sin(angle_rads)
+        end_pos = (end_x, end_y)
+
+        # Draw the portal line
+        pg.draw.line(self.render_image, wormhole.color, (wormhole.x, wormhole.y), end_pos, 5)
 
 
     def check_nogo_collision(self):

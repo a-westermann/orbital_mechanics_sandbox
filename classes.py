@@ -57,10 +57,19 @@ class NoGoZone(pg.Rect, ColorLerpObject):
         ColorLerpObject.__init__(self, (255, 0, 0), (255, 0, 0), (125, 0, 0))
 
 
-class Wormhole(pg.Rect):
-    def __init__(self, pos, width, height):
-        super().__init__(pos[0], pos[1], width, height)
+class Wormhole:
+    def __init__(self, pos, angle):
+        self.x = pos[0]
+        self.y = pos[1]
+        self.length = 100
         self.color = (0, 0, 255)
+        self.angle = angle
+        import math
+        angle_radians = math.radians(self.angle)
+        self.end_x = pos[0] + self.length * math.cos(angle_radians)
+        self.end_y = pos[1] + self.length * math.sin(angle_radians)
+        self.centerx = pos[0] + self.length / 2 * math.cos(angle_radians)
+        self.centery = pos[1] + self.length / 2 * math.sin(angle_radians)
 
 
 class Level:

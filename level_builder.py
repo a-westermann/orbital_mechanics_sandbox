@@ -25,7 +25,7 @@ def load_level(lvl) -> Level:
     wormholes = []
     if 'wormholes' in lvl_data:
         for i, w in enumerate(lvl_data['wormholes']):
-            wormholes.append(Wormhole((w['x'], w['y']), w['width'], w['height']))
+            wormholes.append(Wormhole((w['x'], w['y']), w['angle']))
 
 
     level = Level(lvl, lvl_name, bodies, goal, nogos, wormholes)
